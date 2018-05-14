@@ -9,6 +9,6 @@
 </div>
 
 <div>
-  <input #newMessage type="text" placeholder="Enter Text">
-  <button (click)="sendMessage(newMessage.value)">Send</button>
+  <p #userN>{{(userName | async)?.$value}}:<p> <input #newMessage type="text" placeholder="Enter Text">
+  <button (click)="sendMessage(userN, newMessage.value)">Send</button>
 </div>

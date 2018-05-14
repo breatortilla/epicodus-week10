@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AimService } from '../aim.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
 
 @Component({
@@ -17,6 +17,7 @@ export class ChatDisplayComponent implements OnInit {
   userId: string;
   conversation: FirebaseListObservable<any[]>;
   messages: FirebaseListObservable<any[]>;
+  userName: FirebaseObjectObservable<any>;
 
   constructor(private router: Router, private route: ActivatedRoute, private location: Location, private aimService: AimService) { }
 
@@ -24,6 +25,7 @@ export class ChatDisplayComponent implements OnInit {
     this.userId = this.route.params['_value']['id'];
     this.conversation = this.aimService.getBuddy(this.userId);
     this.messages = this.aimService.getMessagesByUserId(this.userId);
+    this.userName = this.aimService.getUserNameById(this.userId);
     // .subscribe(
     //   dataLastEmittedFromObserver => {
     //   this.conversation = dataLastEmittedFromObserver;
@@ -33,8 +35,9 @@ export class ChatDisplayComponent implements OnInit {
   // );
   }
 
-  sendMessage(newMessage) {
-    this.aimService.appendMessage(newMessage, this.userId);
+  sendMessage(userName, newMessage) {
+    console.log(userName);
+    this.aimService.appendMessage(`${userName}: ${newMessage}`, this.userId);
   }
 
 }
