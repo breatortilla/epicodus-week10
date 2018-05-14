@@ -1,9 +1,10 @@
 <!-- <app-conversation></app-conversation>
 <app-compose></app-compose> -->
-<div *ngFor="let chat of conversation">
+<div *ngFor="let chat of conversation | async">
   <p>Conversation with {{chat.buddy}}</p>
-  <div *ngFor="let message of chat.messages">
-    <p>{{message}}</p>
+  <!-- <p>{{chat.messages | json}}</p> -->
+  <div *ngFor="let message of messages | async ">
+    <p>{{message.$value | json}}</p>
   </div>
 </div>
 
